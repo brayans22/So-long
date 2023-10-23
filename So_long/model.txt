@@ -1,0 +1,82 @@
+@startuml
+
+Class Main
+{
+   start_program() : int
+   set_visual() : int
+   set_logic() : int
+   end_program : int
+}
+
+
+Class T_Visual
+{
+    #defineshow_screem() : void
+    + close_screem() : void
+}
+
+Class T_Juego
+{
+    + total_movements : int
+    + start_game() : int
+    + update () : int
+    + finish_game() : void
+}
+
+Class T_Map
+{
+    - max_fil : int
+    - max_col : int
+}
+
+Class T_Line
+{
+    - content : char *
+    - type : char 
+}
+
+Class T_Element
+{
+     - symbol : char *
+     - pos_x : int 
+     - pos_y : int
+}
+
+Class T_Validator
+{
+     - total_exits : int
+     - total_positions : int
+}
+
+Enum Constants
+{
+    + EXIT : 'E'
+    + POSITION : 'P'
+    + COLLECTABLE : 'C'
+    + WALL : '1'
+    + EMPTY : '0'
+    + MAX_EXITS  : 1
+    + MAX_PLAYERS : 1
+    + MAX_POSITIONS : 1
+    + MAX_BORDER_SIDES : 1
+    + TYPE_LINE_EOF = 'F'
+    + TYPE_LINE_FIRST = 'Z'
+    + TYPE_LINE_MIDDLE = 'M'
+    + ERROR_OPEN_FILE : "Error\n file cannot open correctly\n"
+    + ERROR_READ_FILE : "Error\n file cannot close correctly\n"
+    + ERROR_ENTRANCE : "Error\n more than one entrace\n"
+    + ERROR_EXIT : "Error\n more than one exit\n"
+    + ERROR_INVALID_PATH : "Error\n There is no valid path on the map\n"
+    + ERROR_INVALID_BORDER : "Error\n Map border is invalid\n"
+    + ERROR_INVALID_MAP : "Error\n It is not a rectangular map\n"
+}
+
+Main -> T_Juego
+Main --> T_Visual
+T_Juego --> T_Map
+T_Map --> T_Line
+T_Map "1" -> "*" T_Element
+
+
+
+@enduml
