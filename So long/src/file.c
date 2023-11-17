@@ -78,7 +78,7 @@ static int open_fd(char *path_file)
     int fd;
 
     fd = open(path_file, O_RDONLY);
-    if (fd < ERROR)
+    if (fd <= ERROR)
         display_error_message(ERROR_OPEN_FILE, 33);
     return (fd);
 }
@@ -91,7 +91,7 @@ char **process_file(char *path_file, char **lines, size_t *total_lines)
     int     fd;
     
     fd = open_fd(path_file);
-    if (fd < ERROR)
+    if (fd <= ERROR)
         return (NULL);
     (*total_lines) = 0;
     line = get_next_line(fd);
