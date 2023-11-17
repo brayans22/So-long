@@ -1,0 +1,76 @@
+#COLORS
+END=$'\x1b[0m
+BOLD=$'\x1b[1m
+UNDER=$'\x1b[4m
+REV=$'\x1b[7m
+GREY=$'\x1b[30m
+RED=$'\x1b[31m
+GREEN=$'\x1b[32m
+YELLOW=$'\x1b[33m
+BLUE=$'\x1b[34m
+PURPLE=$'\x1b[35m
+CYAN=$'\x1b[36m
+WHITE=$'\x1b[37m
+
+#Directories So Long
+SRC_DIR			= ./src/
+INCLUDES_DIR	= ./headers/
+
+#OBJECTS SO LONG
+OBJS_SO_LONG = $(SRCS_SO_LONG:.c=.o)
+SRCS_SO_LONG = $(addprefix $(SRC_DIR), 								\
+file.c game.c get_next_line.c get_next_line_utils.c  				\
+graphic.c map_validator.c map.c so_long.c util.c main.c				\
+)
+
+#GCC & Makefile & Name
+NAME = so_long
+CC = gcc
+MAKE_FILE = Makefile
+SO_LONG_HEADER_FILE = /headers/so_long.h
+
+#DEBUG 
+ifeq ($(DEBUG), 1)
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+else
+FLAGS = -Wall -Wextra -Werror
+endif
+
+#SYS OPERATIVE
+UNAME = $(shell uname -s)
+
+ifeq ($(UNAME), DARWIN)
+  GNOME_FLAGS = -framework OpenGL -framework Appkit -l z
+  GNOME_PATH = ./mlx_mac/
+  MLX_PATH = $(GNOME_PATH)/libmlx.dylib
+else
+  GNOME_FLAGS = -lXext -lX11 -lm -lbsd
+  GNOME_PATH = ./mlx_linux/
+  MLX_PATH = $(GNOME_PATH)/libmlx.a
+endif
+
+all : _mlx $(NAME)
+
+$(NAME) : $(MAKE_FILE) $(OBJS_SO_LONG) $(MLX_PATH)
+	@$(CC) $(CFLAGS) $(OBJS_SO_LONG) $(MLX_PATH) $(GNOME_FLAGS) -o $(NAME) 
+	@echo "\n${GREEN}> Compilation of so_long is success 🎉${END}"
+
+%.o : %.c $(SO_LONG_HEADER_FILE) $(MAKE_FILE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR)
+
+clean :
+	@make clean -C $(GNOME_PATH)
+	@rm -f $(OBJS_SO_LONG)
+	@echo "${YELLOW}> All objects files of so_long have been deleted ❌${END}"
+
+fclean : clean
+	@make clean -C $(GNOME_PATH)
+	@rm -f $(NAME)
+	@echo "${YELLOW}> Cleaning of so_long has been done ❌${END}"
+
+re: fclean all
+
+_mlx :
+	@make -C $(GNOME_PATH)
+
+.PHONY:	all test clean fclean re lib
