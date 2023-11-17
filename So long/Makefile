@@ -1,17 +1,3 @@
-#COLORS
-END=$'\x1b[0m
-BOLD=$'\x1b[1m
-UNDER=$'\x1b[4m
-REV=$'\x1b[7m
-GREY=$'\x1b[30m
-RED=$'\x1b[31m
-GREEN=$'\x1b[32m
-YELLOW=$'\x1b[33m
-BLUE=$'\x1b[34m
-PURPLE=$'\x1b[35m
-CYAN=$'\x1b[36m
-WHITE=$'\x1b[37m
-
 #Directories So Long
 SRC_DIR			= ./src/
 INCLUDES_DIR	= ./headers/
@@ -27,14 +13,8 @@ graphic.c map_validator.c map.c so_long.c util.c main.c				\
 NAME = so_long
 CC = gcc
 MAKE_FILE = Makefile
-SO_LONG_HEADER_FILE = /headers/so_long.h
-
-#DEBUG 
-ifeq ($(DEBUG), 1)
+SO_LONG_HEADER_FILE = /headers/so_long.c
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-else
-FLAGS = -Wall -Wextra -Werror
-endif
 
 #SYS OPERATIVE
 UNAME = $(shell uname -s)
@@ -53,7 +33,7 @@ all : _mlx $(NAME)
 
 $(NAME) : $(MAKE_FILE) $(OBJS_SO_LONG) $(MLX_PATH)
 	@$(CC) $(CFLAGS) $(OBJS_SO_LONG) $(MLX_PATH) $(GNOME_FLAGS) -o $(NAME) 
-	@echo "\n${GREEN}> Compilation of so_long is success 🎉${END}"
+	@echo " Compilation of so_long is ok"
 
 %.o : %.c $(SO_LONG_HEADER_FILE) $(MAKE_FILE)
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR)
@@ -61,16 +41,16 @@ $(NAME) : $(MAKE_FILE) $(OBJS_SO_LONG) $(MLX_PATH)
 clean :
 	@make clean -C $(GNOME_PATH)
 	@rm -f $(OBJS_SO_LONG)
-	@echo "${YELLOW}> All objects files of so_long have been deleted ❌${END}"
+	@echo " have been deleted ❌"
 
 fclean : clean
 	@make clean -C $(GNOME_PATH)
 	@rm -f $(NAME)
-	@echo "${YELLOW}> Cleaning of so_long has been done ❌${END}"
+	@echo " All has been deleted "
 
 re: fclean all
 
 _mlx :
 	@make -C $(GNOME_PATH)
 
-.PHONY:	all test clean fclean re lib
+.PHONY:	all test clean fclean re
