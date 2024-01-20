@@ -59,18 +59,3 @@ int	free_game(t_game *game)
 	free_map(game->map, game->height_map);
 	exit(0);
 }
-
-/*
-	if (game->graphic.img_collectable)
-		mlx_destroy_image(game->graphic.win_ptr, game->graphic.img_collectable);
-	if (game->graphic.img_exit)
-		mlx_destroy_image(game->graphic.win_ptr, game->graphic.img_exit);
-	if (game->graphic.img_floor)
-		mlx_destroy_image(game->graphic.win_ptr, game->graphic.img_floor);
-	if (game->graphic.img_player)
-		mlx_destroy_image(game->graphic.win_ptr, game->graphic.img_player);
-	if (game->graphic.img_wall)
-		mlx_destroy_image(game->graphic.win_ptr, game->graphic.img_wall);
-	if (game->graphic.win_ptr)
-		mlx_destroy_window(game->graphic.mlx_ptr, game->graphic.win_ptr);
-	*/
