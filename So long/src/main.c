@@ -47,9 +47,3 @@ int	main(int argc, char **argv)
 		return (display_message(ERROR_INVALID_FORMAT, 37));
 	return (0);
 }
-
-/*
-	for (size_t i = 0; i < total_lines; i++)
-		printf("%s", map[i]);
-	printf("/n");
-*/
